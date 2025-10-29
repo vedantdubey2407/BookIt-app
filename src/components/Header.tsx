@@ -1,13 +1,24 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Header() {
   const [searchTerm, setSearchTerm] = useState('');
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // ✅ When navigating back to home page, clear the search bar
+  useEffect(() => {
+    if (pathname === '/') {
+      const q = searchParams.get('q');
+      // If URL has no "q" param, clear search term
+      if (!q) setSearchTerm('');
+    }
+  }, [pathname, searchParams]);
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
@@ -25,17 +36,14 @@ export default function Header() {
     <header className="w-full bg-white shadow-sm">
       <div className="flex w-full items-center justify-between px-20 py-3">
         {/* ✅ Logo Section */}
-        <Link href="/" className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3" onClick={() => setSearchTerm('')}>
           <Image
-            src="/attachment.png" // your logo file in /public
+            src="/attachment.png"
             alt="Highway Delite Logo"
-            width={100}   // ⬅️ Increased size (was 38)
-            height={55}  // ⬅️ Increased size (was 38)
+            width={100}
+            height={55}
             className="object-contain"
           />
-         
-         
-         
         </Link>
 
         {/* ✅ Search Bar Section */}
