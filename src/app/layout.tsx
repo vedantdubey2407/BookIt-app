@@ -23,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} antialiased`}>
-        <Suspense fallback={<div>Loading header...</div>}></Suspense>
+       <Suspense>
+          <Header />
+        </Suspense>
         
-        <Header />
+    
         {children}
       </body>
     </html>
