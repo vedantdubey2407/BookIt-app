@@ -8,10 +8,13 @@ const sampleExperiences = [
     description: 'Curated small-group experience. Certified guide. Safety first with gear included.',
     price: 999,
     location: 'Udupi, Karnataka',
-    imageUrl: 'https://images.unsplash.com/photo-1588432133486-764f4f304d9c',
+    imageUrl: 'https://images.unsplash.com/photo-1586078074298-05dca4848695?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1935',
     slots: [
-      { date: new Date('2025-11-15'), times: [{ time: '09:00 AM', slotsAvailable: 10 }, { time: '11:00 AM', slotsAvailable: 5 }] },
-      { date: new Date('2025-11-16'), times: [{ time: '09:00 AM', slotsAvailable: 8 }, { time: '11:00 AM', slotsAvailable: 0 }] },
+      { date: new Date('2025-11-15'), times: [{ time: '07:00 AM', slotsAvailable: 4 }, { time: '09:00 AM', slotsAvailable: 8 }, { time: '11:00 AM', slotsAvailable: 5 }, { time: '01:00 PM', slotsAvailable: 0 }] },
+      { date: new Date('2025-11-16'), times: [{ time: '07:00 AM', slotsAvailable: 2 }, { time: '09:00 AM', slotsAvailable: 6 }, { time: '11:00 AM', slotsAvailable: 3 }] },
+      { date: new Date('2025-11-17'), times: [{ time: '09:00 AM', slotsAvailable: 10 }, { time: '11:00 AM', slotsAvailable: 10 }] },
+      { date: new Date('2025-11-18'), times: [{ time: '07:00 AM', slotsAvailable: 5 }, { time: '09:00 AM', slotsAvailable: 5 }] },
+      
     ],
   },
   {
@@ -19,9 +22,12 @@ const sampleExperiences = [
     description: 'Witness a breathtaking sunrise from the top of Nandi Hills. Includes breakfast.',
     price: 899,
     location: 'Bangalore, Karnataka',
-    imageUrl: 'https://images.unsplash.com/photo-1600293299123-fa1bf2599dfd',
+    imageUrl: 'https://images.unsplash.com/photo-1741194150373-3b634f273300?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fG5hbmRpJTIwaGlsbHMlMkMlMjBpbmRpYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=600',
     slots: [
-      { date: new Date('2025-11-20'), times: [{ time: '04:00 AM', slotsAvailable: 15 }, { time: '05:00 AM', slotsAvailable: 12 }] },
+     { date: new Date('2025-11-20'), times: [{ time: '04:00 AM', slotsAvailable: 15 }, { time: '05:00 AM', slotsAvailable: 12 }] },
+      { date: new Date('2025-11-21'), times: [{ time: '04:00 AM', slotsAvailable: 10 }, { time: '05:00 AM', slotsAvailable: 9 }] },
+      { date: new Date('2025-11-22'), times: [{ time: '04:00 AM', slotsAvailable: 18 }, { time: '05:00 AM', slotsAvailable: 0 }] },
+      { date: new Date('2025-11-23'), times: [{ time: '04:00 AM', slotsAvailable: 8 }, { time: '05:00 AM', slotsAvailable: 7 }] },
     ],
   },
 ];

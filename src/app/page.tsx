@@ -1,47 +1,87 @@
-import ExperienceCard from '../components/ExperienceCard';
-import { IExperience } from '../models/Experience'; // Import the type definition
+'use client'; // The home page is now interactive
 
-// Helper function to fetch experiences
-async function getExperiences() {
-  // Use the full URL for server-side fetching in development
-  const res = await fetch('http://localhost:3000/api/experiences', {
-    cache: 'no-store', // Ensures fresh data on every request
-  });
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import ExperienceCard from '@/components/ExperienceCard';
+import { IExperience } from '@/models/Experience';
 
-  if (!res.ok) {
-    throw new Error('Failed to fetch experiences');
+function HomePageContent() {
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get('q') || '';
+
+  const [allExperiences, setAllExperiences] = useState<IExperience[]>([]);
+  const [filteredExperiences, setFilteredExperiences] = useState<IExperience[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // 1. Fetch all experiences once when the component mounts
+  useEffect(() => {
+    const fetchExperiences = async () => {
+      try {
+        const res = await fetch('/api/experiences');
+        const data = await res.json();
+        if (data.success) {
+          setAllExperiences(data.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch experiences:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchExperiences();
+  }, []);
+
+  // 2. Filter experiences whenever the search query or the full list changes
+  useEffect(() => {
+    if (searchQuery) {
+      const filtered = allExperiences.filter(exp =>
+        exp.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        exp.location.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredExperiences(filtered);
+    } else {
+      setFilteredExperiences(allExperiences); // If no query, show all
+    }
+  }, [searchQuery, allExperiences]);
+
+  if (loading) {
+    return <p className="text-center p-8">Loading experiences...</p>;
   }
-
-  const data = await res.json();
-  return data.data; // We want the 'data' array from our API response
-}
-
-
-export default async function Home() {
-  const experiences: IExperience[] = await getExperiences();
 
   return (
     <main className="min-h-screen bg-gray-50 p-8">
       <div className="mx-auto max-w-7xl">
         <h1 className="mb-8 text-4xl font-bold text-gray-900">
-          Explore Experiences
+          {searchQuery ? `Results for "${searchQuery}"` : "Explore Experiences"}
         </h1>
         
-        {/* Responsive Grid for Experience Cards */}
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {experiences.map((exp) => (
-            <ExperienceCard
-              key={exp._id as string}
-              id={exp._id as string}
-              name={exp.name}
-              location={exp.location}
-              description={exp.description}
-              price={exp.price}
-              imageUrl={exp.imageUrl}
-            />
-          ))}
-        </div>
+        {filteredExperiences.length > 0 ? (
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {filteredExperiences.map((exp) => (
+              <ExperienceCard
+                key={exp._id}
+                id={exp._id}
+                name={exp.name}
+                location={exp.location}
+                description={exp.description}
+                price={exp.price}
+                imageUrl={exp.imageUrl}
+              />
+            ))}
+          </div>
+        ) : (
+          <p>No experiences found matching your search.</p>
+        )}
       </div>
     </main>
+  );
+}
+
+// The useSearchParams hook must be used within a Suspense boundary
+export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomePageContent />
+    </Suspense>
   );
 }

@@ -19,8 +19,8 @@ export default function ExperienceCard({ id, name, location, description, price,
         <Image
           src={imageUrl}
           alt={name}
-          layout="fill"
-          objectFit="cover"
+          fill // Use the fill prop for responsive sizing
+          className="object-cover" // Use Tailwind CSS for object-fit
         />
       </div>
       
