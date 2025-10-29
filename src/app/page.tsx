@@ -70,7 +70,7 @@ function HomePageContent() {
             ))}
           </div>
         ) : (
-          <p>No experiences found matching your search.</p>
+          <p className='text-black'>No experiences found matching your search.</p>
         )}
       </div>
     </main>
